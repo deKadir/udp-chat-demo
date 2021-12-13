@@ -1,5 +1,4 @@
 package com.chat;
-import com.chat.config.ServerConfig;
 import com.chat.models.Message;
 import com.chat.utils.StringBuilder;
 
@@ -7,7 +6,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
@@ -17,7 +15,7 @@ public class Server {
     {
         //required declarations
         SimpleDateFormat formatter= new SimpleDateFormat(" 'at' HH:mm:ss");
-        DatagramSocket serverSocket = new DatagramSocket(ServerConfig.PORT);
+        DatagramSocket serverSocket = new DatagramSocket(1234);
         System.out.println("Enter your username:");
         Scanner usernameScanner=new Scanner(System.in);
         String username=usernameScanner.nextLine();

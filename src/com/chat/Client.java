@@ -1,6 +1,5 @@
 package com.chat;
 
-import com.chat.config.ServerConfig;
 import com.chat.models.Message;
 import com.chat.utils.StringBuilder;
 
@@ -49,7 +48,7 @@ public class Client {
                 //we convert message object to string then byte array
                 sendDataBuffer = message.toString().getBytes("UTF-8");
                 //datagram packet takes data,length,ip and port parameters
-                packetSend =new DatagramPacket(sendDataBuffer, sendDataBuffer.length, ip, ServerConfig.PORT);
+                packetSend =new DatagramPacket(sendDataBuffer, sendDataBuffer.length, ip, 1234);
                 //sending datagrampacket using socket
                 clientSocket.send(packetSend);
 
