@@ -26,7 +26,7 @@ public class Server {
         message.setSender(username);
         Scanner messageScanner =new Scanner(System.in);
 
-        byte[] receiveBuffer = new byte[1024];
+        byte[] receiveBuffer = new byte[65535];
         byte[] sendBuffer;
         DatagramPacket packetReceive,packetSend;
         while (true)

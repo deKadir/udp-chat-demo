@@ -37,7 +37,7 @@ public class Client {
         InetAddress ip = InetAddress.getLocalHost();
         //buffers for byte array
         byte[] sendDataBuffer = null;
-        byte[] receiveDataBuffer=new byte[1024];
+        byte[] receiveDataBuffer=new byte[65535];
         DatagramPacket packetSend,packetReceive;
         while (true)
         {
