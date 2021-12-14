@@ -1,4 +1,5 @@
 package com.chat;
+import com.chat.config.ServerConfig;
 import com.chat.models.Message;
 import com.chat.utils.StringBuilder;
 
@@ -15,18 +16,17 @@ public class Server {
     {
         //required declarations
         SimpleDateFormat formatter= new SimpleDateFormat(" 'at' HH:mm:ss");
-        DatagramSocket serverSocket = new DatagramSocket(1234);
+        Scanner messageScanner =new Scanner(System.in);
         System.out.println("Enter your username:");
         Scanner usernameScanner=new Scanner(System.in);
         String username=usernameScanner.nextLine();
         System.out.format("Welcome %s!\nYou can start typing now!\n",username);
-
         //message object which we created
         Message message=new Message();
         message.setSender(username);
 
-        //socket and byte arrays 
-        Scanner messageScanner =new Scanner(System.in);
+        //socket,packets and byte arrays
+        DatagramSocket serverSocket = new DatagramSocket(ServerConfig.PORT);
         byte[] receiveBuffer = new byte[65535];
         byte[] sendBuffer;
         DatagramPacket packetReceive,packetSend;
@@ -35,23 +35,27 @@ public class Server {
             //receive data
             packetReceive = new DatagramPacket(receiveBuffer, receiveBuffer.length);
             serverSocket.receive(packetReceive);
-            InetAddress ip= packetReceive.getAddress();
-            int port =packetReceive.getPort();
             String receivedData= StringBuilder.data(packetReceive.getData());
             System.out.println(receivedData);
 
-            //send data
+
             String serverData=messageScanner.nextLine();
-                message.setMessage(serverData);
+            if(serverData.equalsIgnoreCase("bye")){
+                break;
+            }
+            //get client ip address and port
+            InetAddress ip= packetReceive.getAddress();
+            int port =packetReceive.getPort();
+
+            //send data
+            message.setMessage(serverData);
                 Date date = new Date(System.currentTimeMillis());
                 message.setTime(formatter.format(date));
                 sendBuffer=message.toString().getBytes("UTF-8");
                 packetSend=new DatagramPacket(sendBuffer,sendBuffer.length,ip,port);
                 serverSocket.send(packetSend);
 
-            if(message.getMessage().equalsIgnoreCase("bye")){
-                break;
-            }
+
         }
         serverSocket.close();
     }

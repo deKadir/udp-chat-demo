@@ -1,6 +1,7 @@
 package com.chat.models;
 
 public class Message {
+
     //message object for our chat application
 
     private String sender;
